@@ -33,6 +33,10 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         //initialize player
         player = new Player(getContext());
         ball = new Ball(getContext(),15);
+        float rangeX = (5f - (-5f)) + 1f;
+        ball.ballSpeedX = (float)Math.floor(Math.random() * rangeX) + -2f;
+        float rangeY = (5f - 4f) + 1f;
+        ball.ballSpeedY = (float)Math.floor(Math.random() * rangeY) + 4f;
         setFocusable(true);
     }
 

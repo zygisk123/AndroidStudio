@@ -8,6 +8,8 @@ import android.graphics.Paint;
 import androidx.core.content.ContextCompat;
 
 public class Ball {
+    public double ballSpeedX;
+    public double ballSpeedY;
     private double ballX;
     private double ballY;
     private double radius;
@@ -25,6 +27,11 @@ public class Ball {
         this.ballY = getScreenHeight() / 2 - radius / 2;
         this.radius = radius;
 
+        // these variables are for keeping track of our velocity on both the
+        // X and Y axis, since the ball can move in two dimensions
+        this.ballSpeedX = 0;
+        this.ballSpeedY = 0;
+
         paint = new Paint();
         int color = ContextCompat.getColor(context, R.color.ball);
         paint.setColor(color);
@@ -34,5 +41,34 @@ public class Ball {
     }
 
     public void update() {
+        ballX = ballX + ballSpeedX;
+        ballY = ballY + ballSpeedY;
+
+        // allow ball to bounce off walls
+        if (ballX <= 0){
+            ballX = 1;
+            ballSpeedX = -ballSpeedX;
+            // SOUND
+        }
+        if (ballX >= getScreenWidth() - radius){
+            ballX = getScreenWidth() - radius;
+            ballSpeedX = -ballSpeedX;
+            // SOUND
+        }
+        if (ballX <= 0){
+            ballX = 0;
+            ballSpeedX = -ballSpeedX;
+            // SOUND
+        }
+        if (ballY <= 0){
+            ballY = 0;
+            ballSpeedY = -ballSpeedY;
+            // SOUND
+        }
+        if (ballY >= getScreenHeight() - radius){
+            ballY = getScreenHeight() - radius;
+            ballSpeedY = -ballSpeedY;
+            // SOUND
+        }
     }
 }
