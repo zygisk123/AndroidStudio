@@ -10,9 +10,9 @@ import androidx.core.content.ContextCompat;
 public class Ball {
     public double ballSpeedX;
     public double ballSpeedY;
-    private double ballX;
-    private double ballY;
-    private double radius;
+    public double ballX;
+    public double ballY;
+    public double radius;
     private Paint paint;
     public static int getScreenWidth() {
         return Resources.getSystem().getDisplayMetrics().widthPixels;
@@ -40,7 +40,7 @@ public class Ball {
         canvas.drawCircle((float) ballX, (float) ballY, (float) radius, paint);
     }
 
-    public void update() {
+    public void update(Player player) {
         ballX = ballX + ballSpeedX;
         ballY = ballY + ballSpeedY;
 
@@ -70,5 +70,12 @@ public class Ball {
             ballSpeedY = -ballSpeedY;
             // SOUND
         }
+    }
+
+    public boolean collides(Player player) {
+        if (ballX < player.paddleX + player.width + radius && ballX > player.paddleX - radius && ballY + radius / 2 > player.paddleY - player.heigth / 2 && ballY + radius / 2 <= player.paddleY + player.heigth / 2){
+            return true;
+        }
+        return false;
     }
 }

@@ -2,11 +2,13 @@ package com.example.breakoutgame;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 //import android.view.View;
 import android.content.Context;
+import android.view.VelocityTracker;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
@@ -19,6 +21,8 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
     private final Ball ball;
     private GameLoop gameLoop;
     private Context context;
+    private float temporary_x;
+    private float playerSpeed;
 
     public Game(Context context) {
         super(context);
@@ -40,14 +44,18 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         setFocusable(true);
     }
 
+    private VelocityTracker mVelocityTracker = null;
+
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         // handle touch event actions
-        switch(event.getAction()) {
+        switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 return true;
             case MotionEvent.ACTION_MOVE:
+                temporary_x = player.paddleX;
                 player.setPosition((float) event.getX());
+                playerSpeed = temporary_x - player.paddleX;
                 return true;
         }
         return super.onTouchEvent(event);
@@ -100,6 +108,23 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
     public void update() {
         // Update game state
         player.update();
-        ball.update();
+        ball.update(player);
+
+        // check ball collision
+        if(ball.collides(player)){
+            ball.ballY = player.paddleY - player.heigth / 2 - ball.radius / 2 ;
+            ball.ballSpeedY = -ball.ballSpeedY;
+            // SOUND
+            // if we hit the paddle on its left side while moving left...
+            if (ball.ballX < player.paddleX + (player.width / 2) && playerSpeed > 5) {
+                ball.ballSpeedX = -0.3 + -(0.4 * (player.paddleX + player.width / 2 - ball.ballX));
+            }
+
+            // else if we hit the paddle on its right side while moving right...
+            else if (ball.ballX > player.paddleX + (player.width / 2) && playerSpeed < -5) {
+                ball.ballSpeedX = 0.3 + (0.4 * Math.abs(player.paddleX + player.width / 2 - ball.ballX));
+            }
+
+        }
     }
 }

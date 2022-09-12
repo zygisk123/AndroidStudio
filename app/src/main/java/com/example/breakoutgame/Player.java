@@ -9,10 +9,10 @@ import android.graphics.RectF;
 import androidx.core.content.ContextCompat;
 
 public class Player {
-    private int width;
-    private int heigth;
-    private float paddleX;
-    private float paddleY;
+    public int width;
+    public int heigth;
+    public float paddleX;
+    public float paddleY;
     private Paint paint;
 
     public static int getScreenWidth() {
@@ -24,7 +24,7 @@ public class Player {
     }
 
     public Player(Context context){
-        this.width = 120;
+        this.width = 180;
         this.heigth = 30;
         this.paddleX = getScreenWidth() / 2 - 50;
         this.paddleY = getScreenHeight() - 195;
