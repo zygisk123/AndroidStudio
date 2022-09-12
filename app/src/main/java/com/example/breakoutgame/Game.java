@@ -2,6 +2,7 @@ package com.example.breakoutgame;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 //import android.view.View;
@@ -14,7 +15,8 @@ import androidx.core.content.ContextCompat;
 // all objects to the screen
 
 public class Game extends SurfaceView implements SurfaceHolder.Callback {
-
+    private final Player player;
+    private final Ball ball;
     private GameLoop gameLoop;
     private Context context;
 
@@ -28,7 +30,23 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         this.context = context;
         gameLoop = new GameLoop(this, surfaceHolder);
 
+        //initialize player
+        player = new Player(getContext());
+        ball = new Ball(getContext(),15);
         setFocusable(true);
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        // handle touch event actions
+        switch(event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                return true;
+            case MotionEvent.ACTION_MOVE:
+                player.setPosition((float) event.getX());
+                return true;
+        }
+        return super.onTouchEvent(event);
     }
 
     @Override
@@ -52,6 +70,9 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         super.draw(canvas);
         drawFPS(canvas);
         drawUPS(canvas);
+
+        player.draw(canvas);
+        ball.draw(canvas);
     }
 
     public void drawUPS(Canvas canvas){
@@ -74,5 +95,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
 
     public void update() {
         // Update game state
+        player.update();
+        ball.update();
     }
 }
