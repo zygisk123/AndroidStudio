@@ -78,4 +78,10 @@ public class Ball {
         }
         return false;
     }
+    public boolean collidesBlock(LevelMaker level) {
+        if (ballX < player.paddleX + player.width + radius && ballX > player.paddleX - radius && ballY + radius / 2 > player.paddleY - player.heigth / 2 && ballY + radius / 2 <= player.paddleY + player.heigth / 2){
+            return true;
+        }
+        return false;
+    }
 }

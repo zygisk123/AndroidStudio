@@ -13,12 +13,15 @@ import android.view.VelocityTracker;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 
+import com.example.breakoutgame.graphics.SpriteSheet;
+
 // Game manages all object in the game and is responsible for all states and render
 // all objects to the screen
 
 public class Game extends SurfaceView implements SurfaceHolder.Callback {
     private final Player player;
     private final Ball ball;
+    private final LevelMaker level;
     private GameLoop gameLoop;
     private Context context;
     private float temporary_x;
@@ -37,6 +40,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         //initialize player
         player = new Player(getContext());
         ball = new Ball(getContext(),15);
+        level = new LevelMaker(getContext());
         float rangeX = (5f - (-5f)) + 1f;
         ball.ballSpeedX = (float)Math.floor(Math.random() * rangeX) + -2f;
         float rangeY = (5f - 4f) + 1f;
@@ -80,11 +84,12 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
-        drawFPS(canvas);
-        drawUPS(canvas);
+       // drawFPS(canvas);
+       // drawUPS(canvas);
 
         player.draw(canvas);
         ball.draw(canvas);
+        level.draw(canvas);
     }
 
     public void drawUPS(Canvas canvas){
@@ -109,6 +114,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         // Update game state
         player.update();
         ball.update(player);
+        level.update();
 
         // check ball collision
         if(ball.collides(player)){
