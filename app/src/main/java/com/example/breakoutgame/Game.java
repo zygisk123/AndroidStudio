@@ -101,19 +101,10 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         canvas.drawText("UPS: " + averageUPS, 100, 100, paint);
     }
 
-    public void drawFPS(Canvas canvas){
-        String averageFPS = Double.toString(gameLoop.getAverageFPS());
-        Paint paint = new Paint();
-        int color = ContextCompat.getColor(context, R.color.magenta);
-        paint.setColor(color);
-        paint.setTextSize(50);
-        canvas.drawText("FPS: " + averageFPS, 100, 200, paint);
-    }
-
     public void update() {
         // Update game state
         player.update();
-        ball.update(player);
+        ball.update();
         level.update();
 
         // check ball collision
@@ -131,6 +122,10 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
                 ball.ballSpeedX = 0.3 + (0.4 * Math.abs(player.paddleX + player.width / 2 - ball.ballX));
             }
 
+        }
+        if(ball.collidesBlock(level)){
+            ball.ballSpeedX = 0;
+            ball.ballSpeedY = 0;
         }
     }
 }

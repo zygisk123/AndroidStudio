@@ -7,17 +7,24 @@ import android.graphics.Canvas;
 import com.example.breakoutgame.graphics.Sprite;
 import com.example.breakoutgame.graphics.SpriteSheet;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class LevelMaker {
 
-    private float positionX;
-    private float positionY;
-    private int left;
-    private int top;
-    private int right;
-    private int bottom;
-    private int blockHeight;
-    private int blockWidth;
+    public float positionX;
+    public float positionY;
+    public int left;
+    public int top;
+    public int right;
+    public int bottom;
+    public int blockHeight;
+    public int blockWidth;
     SpriteSheet spriteSheet;
+    private Block block;
+    List blockList = new ArrayList();
+
+
 
     public static int getScreenWidth() {
         return Resources.getSystem().getDisplayMetrics().widthPixels;
@@ -43,15 +50,22 @@ public class LevelMaker {
     public void draw(Canvas canvas) {
         int x;
         int y;
+        int id = 0;
         int addX;
         int addY;
         for (y = 0; y < 5; y++){
             for (x = 0; x < 14; x++){
                 addX = (blockWidth + 10) * x;
                 addY = (blockHeight + 10) * y;
-                sprite.draw(canvas, (int) positionX + addX, (int) positionY + addY);
+                id++;
+                block = new Block(sprite, canvas, (int) id, (int) positionX + addX, (int) positionY + addY);
+                blockList.add(block);
             }
         }
+    //    for (int i = 0; i <= blockList.size(); i++){
+    //        blockList.get(i);
+    //    }
+
     }
 
     public void update() {

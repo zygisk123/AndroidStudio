@@ -14,6 +14,7 @@ public class Ball {
     public double ballY;
     public double radius;
     private Paint paint;
+
     public static int getScreenWidth() {
         return Resources.getSystem().getDisplayMetrics().widthPixels;
     }
@@ -22,7 +23,7 @@ public class Ball {
         return Resources.getSystem().getDisplayMetrics().heightPixels;
     }
 
-    public Ball(Context context, double radius){
+    public Ball(Context context, double radius) {
         this.ballX = getScreenWidth() / 2 - radius / 2;
         this.ballY = getScreenHeight() / 2 - radius / 2;
         this.radius = radius;
@@ -36,36 +37,37 @@ public class Ball {
         int color = ContextCompat.getColor(context, R.color.ball);
         paint.setColor(color);
     }
+
     public void draw(Canvas canvas) {
         canvas.drawCircle((float) ballX, (float) ballY, (float) radius, paint);
     }
 
-    public void update(Player player) {
+    public void update() {
         ballX = ballX + ballSpeedX;
         ballY = ballY + ballSpeedY;
 
         // allow ball to bounce off walls
-        if (ballX <= 0){
+        if (ballX <= 0) {
             ballX = 1;
             ballSpeedX = -ballSpeedX;
             // SOUND
         }
-        if (ballX >= getScreenWidth() - radius){
+        if (ballX >= getScreenWidth() - radius) {
             ballX = getScreenWidth() - radius;
             ballSpeedX = -ballSpeedX;
             // SOUND
         }
-        if (ballX <= 0){
+        if (ballX <= 0) {
             ballX = 0;
             ballSpeedX = -ballSpeedX;
             // SOUND
         }
-        if (ballY <= 0){
+        if (ballY <= 0) {
             ballY = 0;
             ballSpeedY = -ballSpeedY;
             // SOUND
         }
-        if (ballY >= getScreenHeight() - radius){
+        if (ballY >= getScreenHeight() - radius) {
             ballY = getScreenHeight() - radius;
             ballSpeedY = -ballSpeedY;
             // SOUND
@@ -73,13 +75,17 @@ public class Ball {
     }
 
     public boolean collides(Player player) {
-        if (ballX < player.paddleX + player.width + radius && ballX > player.paddleX - radius && ballY + radius / 2 > player.paddleY - player.heigth / 2 && ballY + radius / 2 <= player.paddleY + player.heigth / 2){
+        if (ballX < player.paddleX + player.width + radius && ballX > player.paddleX - radius && ballY + radius / 2 > player.paddleY - player.heigth / 2 && ballY + radius / 2 <= player.paddleY + player.heigth / 2) {
             return true;
         }
         return false;
     }
+
     public boolean collidesBlock(LevelMaker level) {
-        if (ballX < player.paddleX + player.width + radius && ballX > player.paddleX - radius && ballY + radius / 2 > player.paddleY - player.heigth / 2 && ballY + radius / 2 <= player.paddleY + player.heigth / 2){
+    //    if (ballX - radius / 2 < level.right || ballX + radius / 2 > level.left && ballY - radius / 2 > level.bottom) {
+    //        return true;
+    //    }
+        if (ballX - radius / 2 < level.right && ballX + radius / 2 > level.left && ballY - radius / 2 > level.bottom) {
             return true;
         }
         return false;
