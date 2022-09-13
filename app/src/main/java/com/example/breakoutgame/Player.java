@@ -10,7 +10,7 @@ import androidx.core.content.ContextCompat;
 
 public class Player {
     public int width;
-    public int heigth;
+    public int height;
     public float paddleX;
     public float paddleY;
     private Paint paint;
@@ -25,7 +25,7 @@ public class Player {
 
     public Player(Context context){
         this.width = 180;
-        this.heigth = 30;
+        this.height = 30;
         this.paddleX = getScreenWidth() / 2 - 50;
         this.paddleY = getScreenHeight() - 195;
 
@@ -39,7 +39,7 @@ public class Player {
                 paddleX, // left
                 paddleY, // top
                 paddleX + width, // right
-                paddleY + heigth // bottom
+                paddleY + height // bottom
         );
         int cornersRadius = 25;
 

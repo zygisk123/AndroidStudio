@@ -12,17 +12,22 @@ import java.util.List;
 
 public class LevelMaker {
 
+    private final Sprite sprite;
+    private final Context context;
     public float positionX;
     public float positionY;
     public int left;
     public int top;
     public int right;
     public int bottom;
-    public int blockHeight;
-    public int blockWidth;
-    SpriteSheet spriteSheet;
-    private Block block;
-    List blockList = new ArrayList();
+    public int brickHeight;
+    public int brickWidth;
+    public int NumOfBricks = 70;
+    public SpriteSheet spriteSheet;
+    public Brick[] bricks;
+    public Ball ball;
+
+    //List brickList = new ArrayList();
 
 
 
@@ -34,18 +39,19 @@ public class LevelMaker {
         return Resources.getSystem().getDisplayMetrics().heightPixels;
     }
 
-    private Sprite sprite;
     public LevelMaker(Context context){
         this.positionX = 50;
         this.positionY = 50;
-        this.blockHeight = 30;
-        this.blockWidth = 60;
+        this.brickHeight = 30;
+        this.brickWidth = 60;
+        this.context = context;
         this.left = 0;
         this.top = 0;
         this.right = 60;
         this.bottom = 30;
+        this.bricks = getBricks();
         spriteSheet = new SpriteSheet(context);
-        sprite = spriteSheet.getBlockSprite(left,top,right,bottom);
+        this.sprite = spriteSheet.getBlockSprite(left,top,right,bottom);
     }
     public void draw(Canvas canvas) {
         int x;
@@ -53,19 +59,21 @@ public class LevelMaker {
         int id = 0;
         int addX;
         int addY;
+        bricks = new Brick[NumOfBricks];
         for (y = 0; y < 5; y++){
             for (x = 0; x < 14; x++){
-                addX = (blockWidth + 10) * x;
-                addY = (blockHeight + 10) * y;
+                addX = (brickWidth + 10) * x;
+                addY = (brickHeight + 10) * y;
+                bricks[id] = new Brick(sprite, canvas, (int) positionX + addX, (int) positionY + addY);
                 id++;
-                block = new Block(sprite, canvas, (int) id, (int) positionX + addX, (int) positionY + addY);
-                blockList.add(block);
             }
         }
-    //    for (int i = 0; i <= blockList.size(); i++){
-    //        blockList.get(i);
-    //    }
 
+        for (int i = 0; i < NumOfBricks; i++){
+            if(!bricks[i].isDestroyed){
+                bricks[i].draw();
+            }
+        }
     }
 
     public void update() {
@@ -73,5 +81,9 @@ public class LevelMaker {
 
     public int getRandomNumber(int min, int max) {
         return (int) ((Math.random() * (max - min)) + min);
+    }
+
+    public Brick[] getBricks(){
+        return bricks;
     }
 }

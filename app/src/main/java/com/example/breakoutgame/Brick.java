@@ -3,22 +3,26 @@ package com.example.breakoutgame;
 import android.graphics.Canvas;
 
 import com.example.breakoutgame.graphics.Sprite;
+import com.example.breakoutgame.graphics.SpriteSheet;
+public class Brick {
 
-public class Block {
-
-    private final Sprite sprite;
+    public int height;
+    public int width;
+    public boolean isDestroyed;
+    private Sprite sprite;
     private Canvas canvas;
     private int id;
-    private int x;
-    private int y;
+    public int x;
+    public int y;
 
-    public Block(Sprite sprite, Canvas canvas, int id, int x, int y) {
+    public Brick(Sprite sprite, Canvas canvas, int x, int y) {
         this.sprite = sprite;
         this.canvas = canvas;
-        this.id = id;
         this.x = x;
         this.y = y;
-        draw();
+        this.width = 60;
+        this.height = 30;
+        this.isDestroyed = false;
     }
 
     @Override
