@@ -30,8 +30,8 @@ public class Brick {
     }
 
     public void update() {
-        if(!isDestroyed){
-            draw();
-        }
+       // if(!isDestroyed){
+       //     draw();
+       // }
     }
 }

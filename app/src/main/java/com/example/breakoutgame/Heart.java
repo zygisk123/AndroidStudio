@@ -24,7 +24,8 @@ public class Heart {
         this.isDestroyed = false;
     }
 
-    public void draw() {
-        sprite.draw(canvas, x, y, width, height);
+    public void draw(Canvas canvas, int heartX, int heartY) {
+
+        sprite.draw(canvas, heartX, heartY, width, height);
     }
 }

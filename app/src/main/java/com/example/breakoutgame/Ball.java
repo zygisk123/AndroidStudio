@@ -69,10 +69,9 @@ public class Ball {
             // SOUND
         }
         if (ballY >= getScreenHeight() - radius) {
-            player.health--;
+//            player.heart--;
          //   ballY = getScreenHeight() - radius;
          //   ballSpeedY = -ballSpeedY;
-          //  player.health -= 1;
             // SOUND
         }
 
@@ -96,5 +95,14 @@ public class Ball {
             return false;
         }
         return true;
+    }
+
+    public void resetBall(){
+        ballX = getScreenWidth() / 2 - radius / 2;
+        ballY = getScreenHeight() / 2 - radius / 2;
+        float rangeX = (5f - (-5f)) + 1f;
+        ballSpeedX = (float)Math.floor(Math.random() * rangeX) + (-2f);
+        float rangeY = (5f - 4f) + 1f;
+        ballSpeedY = (float)Math.floor(Math.random() * rangeY) + 4f;
     }
 }

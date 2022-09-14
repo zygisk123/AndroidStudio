@@ -22,13 +22,12 @@ public class Player {
     public float paddleX;
     public float paddleY;
     private Paint paint;
-    public int health;
+    public int heart = 3;
     public Heart[] hearts;
     private Sprite sprite;
     public int heartX = 30;
     public int heartY = 30;
     public int score;
-
 
     public static int getScreenWidth() {
         return Resources.getSystem().getDisplayMetrics().widthPixels;
@@ -43,7 +42,6 @@ public class Player {
         this.height = 30;
         this.paddleX = getScreenWidth() / 2 - 50;
         this.paddleY = getScreenHeight() - 195;
-        this.health = 3;
         this.left = 0;
         this.top = 31;
         this.right = 30;
@@ -72,17 +70,10 @@ public class Player {
                 cornersRadius, // ry
                 paint // Paint
         );
-        hearts = new Heart[health];
-        for (int i = 0; i < health; i++){
-            int addX = 40 * i;
-            hearts[i] = new Heart(sprite, canvas, (int) heartX + addX, (int) heartY);
-        }
-        for (int i = 0; i < health; i++){
-            if(!hearts[i].isDestroyed);
-            hearts[i].draw();
-        }
+        drawHearts(canvas, heart);
         paint.setTextSize(30);
         canvas.drawText("SCORE: " + score, getScreenWidth() - 200, 30, paint);
+
     }
 
     public void update() {
@@ -102,5 +93,14 @@ public class Player {
         else if (this.paddleX >= screen_right_corner - width){
             paddleX = screen_right_corner - width;
         }
+    }
+
+    public void drawHearts(Canvas canvas, int heart){
+        int addX;
+        for (int i = 0; i < heart; i++){
+            addX = 40 * i;
+            sprite.draw(canvas, heartX + addX, heartY, 30, 30);
+        }
+
     }
 }

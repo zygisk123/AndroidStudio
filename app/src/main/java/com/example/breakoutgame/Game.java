@@ -10,8 +10,6 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 
-import com.google.android.gms.common.util.ArrayUtils;
-
 
 // Game manages all object in the game and is responsible for all states and render
 // all objects to the screen
@@ -26,7 +24,6 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
     private float playerSpeed;
     private Brick[] bricks;
     private Heart[] hearts;
-    private Brick brick;
 
     public Game(Context context) {
         super(context);
@@ -107,6 +104,12 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         ball.update();
         level.update();
 
+        if(ball.ballY - ball.radius > player.paddleY + player.height){
+            player.heart--;
+            if(player.heart > 0){
+                ball.resetBall();
+            }
+        }
         // check ball collision
         if(ball.collides(player)){
             ball.ballY = player.paddleY - player.height / 2.0 - ball.radius / 2 ;
@@ -124,10 +127,6 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
 
         }
 
-        hearts = player.hearts;
-        for (int i = 0; i < player.health; i++){
-            hearts[i].draw();
-        }
         bricks = level.bricks;
         for (int j = 0; j < level.NumOfBricks; j++){
             if(!bricks[j].isDestroyed){
