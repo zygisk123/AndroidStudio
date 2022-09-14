@@ -26,6 +26,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
     private float playerSpeed;
     private Brick[] bricks;
     private Heart[] hearts;
+    private Brick brick;
 
     public Game(Context context) {
         super(context);
@@ -105,6 +106,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         player.update();
         ball.update();
         level.update();
+        brick.update;
 
         // check ball collision
         if(ball.collides(player)){
@@ -136,28 +138,28 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         for (int i = 0; i < level.NumOfBricks; i++){
             if (ball.collides(bricks[i])){
                 // ball RIGHT brick LEFT
-                if (ball.ballX + ball.radius > bricks[i].x && ball.ballSpeedX > 0){
+                if (bricks[i].x - ball.radius + 2 >= ball.ballX && ball.ballX > bricks[i].x - ball.radius && ball.ballSpeedX > 0){
                     ball.ballX = bricks[i].x - ball.radius;
                     ball.ballSpeedX = -ball.ballSpeedX;
                     bricks[i].isDestroyed = true;
                     break;
                 }
                 // ball LEFT brick RIGHT
-                if (ball.ballX - ball.radius < bricks[i].x + bricks[i].width&& ball.ballSpeedX < 0){
+                else if (bricks[i].x + bricks[i].width - 2 + ball.radius <= ball.ballX && ball.ballX < bricks[i].x + bricks[i].width + ball.radius && ball.ballSpeedX < 0){
                     ball.ballX = bricks[i].x + bricks[i].width + ball.radius;
                     ball.ballSpeedX = -ball.ballSpeedX;
                     bricks[i].isDestroyed = true;
                     break;
                 }
                 // ball bottom brick top
-                if (ball.ballY  + ball.radius > bricks[i].y && ball.ballSpeedY > 0){
+                else if (ball.ballY  > bricks[i].y - ball.radius && ball.ballSpeedY > 0){
                     ball.ballY = bricks[i].y - ball.radius;
                     ball.ballSpeedY = -ball.ballSpeedY;
                     bricks[i].isDestroyed = true;
                     break;
                 }
                 // ball top brick bottom
-                if (ball.ballY - ball.radius < bricks[i].y + bricks[i].height && ball.ballSpeedY < 0){
+                else{
                     ball.ballY = bricks[i].y + bricks[i].height + ball.radius;
                     ball.ballSpeedY = -ball.ballSpeedY;
                     bricks[i].isDestroyed = true;

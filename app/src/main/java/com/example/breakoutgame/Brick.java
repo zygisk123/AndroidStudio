@@ -28,4 +28,5 @@ public class Brick {
     public void draw() {
         sprite.draw(canvas, x, y, width, height);
     }
+
 }
