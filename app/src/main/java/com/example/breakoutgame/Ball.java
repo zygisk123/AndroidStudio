@@ -13,6 +13,7 @@ public class Ball {
     public double ballX;
     public double ballY;
     public double radius;
+    public Player player;
     private Paint paint;
 
     public static int getScreenWidth() {
@@ -70,26 +71,27 @@ public class Ball {
         if (ballY >= getScreenHeight() - radius) {
             ballY = getScreenHeight() - radius;
             ballSpeedY = -ballSpeedY;
+          //  player.health -= 1;
             // SOUND
         }
 
     }
 
     public boolean collides(Player target) {
-        if (ballX > target.paddleX + target.width || target.paddleX > ballX + radius / 2){
+        if (ballX - radius > target.paddleX + target.width || target.paddleX > ballX + radius){
             return false;
         }
-        if (ballY > target.paddleY + target.height || target.paddleY > ballY + radius / 2){
+        if (ballY - radius > target.paddleY + target.height || target.paddleY > ballY + radius ){
             return false;
         }
         return true;
     }
 
     public boolean collides(Brick target) {
-        if (ballX > target.x + target.width || target.x > ballX + radius / 2){
+        if (ballX - radius > target.x + target.width || target.x > ballX + radius){
             return false;
         }
-        if (ballY > target.y + target.height || target.y > ballY + radius / 2){
+        if (ballY - radius> target.y + target.height || target.y > ballY + radius){
             return false;
         }
         return true;

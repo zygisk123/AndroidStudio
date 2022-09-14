@@ -13,11 +13,11 @@ public class Sprite {
         this.rect = rect;
     }
 
-    public void draw(Canvas canvas, int x, int y) {
+    public void draw(Canvas canvas, int x, int y, int width, int height) {
         canvas.drawBitmap(
                 spriteSheet.getBitmap(),
                 rect,
-                new Rect(x,y,x+60,y+30),
+                new Rect(x,y,x+width,y+height),
                 null);
     }
 }

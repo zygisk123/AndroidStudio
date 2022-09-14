@@ -3,9 +3,8 @@ package com.example.breakoutgame;
 import android.graphics.Canvas;
 
 import com.example.breakoutgame.graphics.Sprite;
-import com.example.breakoutgame.graphics.SpriteSheet;
-public class Brick {
 
+public class Heart {
     public int height;
     public int width;
     public boolean isDestroyed;
@@ -15,12 +14,12 @@ public class Brick {
     public int x;
     public int y;
 
-    public Brick(Sprite sprite, Canvas canvas, int x, int y) {
+    public Heart(Sprite sprite, Canvas canvas, int heartX, int heartY) {
         this.sprite = sprite;
         this.canvas = canvas;
-        this.x = x;
-        this.y = y;
-        this.width = 60;
+        this.x = heartX;
+        this.y = heartY;
+        this.width = 30;
         this.height = 30;
         this.isDestroyed = false;
     }
