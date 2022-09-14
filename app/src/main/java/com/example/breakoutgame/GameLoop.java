@@ -52,10 +52,10 @@ public class GameLoop extends Thread{
             try {
                 canvas = surfaceHolder.lockCanvas();
                 synchronized (surfaceHolder) {
-                    game.update();
                     updateCount++;
 
                     game.draw(canvas);
+                    game.update();
                 }
             } catch (IllegalArgumentException e){
                 e.printStackTrace();

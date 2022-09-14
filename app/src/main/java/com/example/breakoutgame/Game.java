@@ -10,6 +10,8 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 
+import com.google.android.gms.common.util.ArrayUtils;
+
 
 // Game manages all object in the game and is responsible for all states and render
 // all objects to the screen
@@ -120,11 +122,39 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
 
         }
         bricks = level.bricks;
-        for (int i = 0; i < level.NumOfBricks; i++){
-            Brick brick = bricks[i];
-            if (ball.collides(brick)){
-                brick.isDestroyed = true;
+        for (int j = 0; j < level.NumOfBricks; j++){
+            if(!bricks[j].isDestroyed){
+                bricks[j].draw();
             }
         }
+        for (int i = 0; i < level.NumOfBricks; i++){
+            if (ball.collides(bricks[i])){
+                // ball RIGHT brick LEFT
+                if (ball.ballX + 15 > bricks[i].x && ball.ballSpeedX > 0){
+                    ball.ballX = bricks[i].x - ball.radius / 2;
+                    ball.ballSpeedX = -ball.ballSpeedX;
+                    bricks[i].isDestroyed = true;
+                }
+                // ball LEFT brick RIGHT
+                else if (ball.ballX - 15 < bricks[i].x + bricks[i].width&& ball.ballSpeedX < 0){
+                    ball.ballX = bricks[i].x + bricks[i].width + ball.radius / 2;
+                    ball.ballSpeedX = -ball.ballSpeedX;
+                    bricks[i].isDestroyed = true;
+                }
+                // ball top brick bottom
+                else if (ball.ballY - 15 < bricks[i].y + bricks[i].height && ball.ballSpeedY < 0){
+                    ball.ballY = bricks[i].y + bricks[i].height + ball.radius / 2;
+                    ball.ballSpeedY = -ball.ballSpeedY;
+                    bricks[i].isDestroyed = true;
+                }
+                // ball bottom brick top
+                else if (ball.ballY  + 15 > bricks[i].y && ball.ballSpeedY > 0){
+                    ball.ballY = bricks[i].y - ball.radius / 2;
+                    ball.ballSpeedY = -ball.ballSpeedY;
+                    bricks[i].isDestroyed = true;
+                }
+            }
+        }
+
     }
 }

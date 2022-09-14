@@ -13,7 +13,6 @@ public class Ball {
     public double ballX;
     public double ballY;
     public double radius;
-    public double halfRadius = radius / 2;
     private Paint paint;
 
     public static int getScreenWidth() {

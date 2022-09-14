@@ -22,11 +22,11 @@ public class LevelMaker {
     public int bottom;
     public int brickHeight;
     public int brickWidth;
-    public int NumOfBricks = 70;
+    public int NumOfBricks = 52;
     public SpriteSheet spriteSheet;
     public Brick[] bricks;
+    public Brick[] bricks2;
     public Ball ball;
-
     //List brickList = new ArrayList();
 
 
@@ -40,8 +40,8 @@ public class LevelMaker {
     }
 
     public LevelMaker(Context context){
-        this.positionX = 50;
-        this.positionY = 50;
+        this.positionX = 100;
+        this.positionY = 100;
         this.brickHeight = 30;
         this.brickWidth = 60;
         this.context = context;
@@ -49,34 +49,22 @@ public class LevelMaker {
         this.top = 0;
         this.right = 60;
         this.bottom = 30;
-        this.bricks = getBricks();
         spriteSheet = new SpriteSheet(context);
         this.sprite = spriteSheet.getBlockSprite(left,top,right,bottom);
     }
     public void draw(Canvas canvas) {
-        int x;
-        int y;
-        int id = 0;
-        int addX;
-        int addY;
-        bricks = new Brick[NumOfBricks];
-        for (y = 0; y < 5; y++){
-            for (x = 0; x < 14; x++){
-                addX = (brickWidth + 10) * x;
-                addY = (brickHeight + 10) * y;
-                bricks[id] = new Brick(sprite, canvas, (int) positionX + addX, (int) positionY + addY);
-                id++;
-            }
-        }
+        bricks(canvas);
+       // for (int i = 0; i < NumOfBricks; i++){
+       //     if(!bricks[i].isDestroyed){
+       //         bricks[i].draw();
+       //     }
+       // }
 
-        for (int i = 0; i < NumOfBricks; i++){
-            if(!bricks[i].isDestroyed){
-                bricks[i].draw();
-            }
-        }
     }
 
     public void update() {
+
+
     }
 
     public int getRandomNumber(int min, int max) {
@@ -84,6 +72,25 @@ public class LevelMaker {
     }
 
     public Brick[] getBricks(){
-        return bricks;
+        bricks2 = bricks;
+        return bricks2;
+    }
+
+    public void bricks(Canvas canvas){
+        int x;
+        int y;
+        int id = 0;
+        int addX;
+        int addY;
+        bricks = new Brick[NumOfBricks];
+        for (y = 0; y < 4; y++){
+            for (x = 0; x < 13; x++){
+                addX = (brickWidth + 10) * x;
+                addY = (brickHeight + 10) * y;
+                bricks[id] = new Brick(sprite, canvas, (int) positionX + addX, (int) positionY + addY);
+                id++;
+            }
+        }
+
     }
 }
