@@ -27,6 +27,7 @@ public class Player {
     private Sprite sprite;
     public int heartX = 30;
     public int heartY = 30;
+    public int score;
 
 
     public static int getScreenWidth() {
@@ -47,6 +48,7 @@ public class Player {
         this.top = 31;
         this.right = 30;
         this.bottom = 60;
+        this.score = 0;
         spriteSheet = new SpriteSheet(context);
         this.sprite = spriteSheet.getBlockSprite(left,top,right,bottom);
         paint = new Paint();
@@ -79,6 +81,8 @@ public class Player {
             if(!hearts[i].isDestroyed);
             hearts[i].draw();
         }
+        paint.setTextSize(30);
+        canvas.drawText("SCORE: " + score, getScreenWidth() - 200, 30, paint);
     }
 
     public void update() {

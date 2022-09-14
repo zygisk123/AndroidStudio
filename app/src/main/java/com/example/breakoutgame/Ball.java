@@ -69,8 +69,9 @@ public class Ball {
             // SOUND
         }
         if (ballY >= getScreenHeight() - radius) {
-            ballY = getScreenHeight() - radius;
-            ballSpeedY = -ballSpeedY;
+            player.health--;
+         //   ballY = getScreenHeight() - radius;
+         //   ballSpeedY = -ballSpeedY;
           //  player.health -= 1;
             // SOUND
         }

@@ -106,7 +106,6 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         player.update();
         ball.update();
         level.update();
-        brick.update;
 
         // check ball collision
         if(ball.collides(player)){
@@ -137,6 +136,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         }
         for (int i = 0; i < level.NumOfBricks; i++){
             if (ball.collides(bricks[i])){
+                player.score++;
                 // ball RIGHT brick LEFT
                 if (bricks[i].x - ball.radius + 2 >= ball.ballX && ball.ballX > bricks[i].x - ball.radius && ball.ballSpeedX > 0){
                     ball.ballX = bricks[i].x - ball.radius;
