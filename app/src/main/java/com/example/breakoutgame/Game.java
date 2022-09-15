@@ -47,14 +47,16 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         int id = 0;
         for (int y = 0; y < 4; y++){
             for (int x = 0; x < 13; x++){
+                int rangeY = (2 - 0) + 1;
+                int brick_color = (int)Math.floor(Math.random() * rangeY) + 0;
                 int addX = (60 + 10) * x;
                 int addY = (30 + 10) * y;
-                bricks[id] = new Brick(getContext(), 100 + addX, 100 + addY);
+                bricks[id] = new Brick(getContext(), 100 + addX, 100 + addY, brick_color);
                 id++;
             }
         }
         float rangeX = (5f - (-5f)) + 1f;
-        ball.ballSpeedX = (float)Math.floor(Math.random() * rangeX) + (-2f);
+        ball.ballSpeedX = (float)Math.floor(Math.random() * rangeX) + (-5f);
         float rangeY = (5f - 4f) + 1f;
         ball.ballSpeedY = (float)Math.floor(Math.random() * rangeY) + 4f;
         setFocusable(true);
@@ -149,14 +151,11 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
             }
 
         }
-     //   if (ball.collides(brick) && !brick.isDestroyed){
-     //       brick.isDestroyed = true;
-     //   }
 
          for (int i = 0; i < level.NumOfBricks; i++){
             if (ball.collides(bricks[i]) && !bricks[i].isDestroyed){
                 bricks[i].isDestroyed = true;
-                player.score++;
+                player.score = player.score + 1 * bricks[i].brickColor;
                 // ball RIGHT brick LEFT
                 if (ball.ballX - ball.radius < bricks[i].x && ball.ballSpeedX > 0){
                     ball.ballSpeedX = -ball.ballSpeedX;

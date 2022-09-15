@@ -20,17 +20,17 @@ public class Brick {
     public int top;
     public int right;
     public int bottom;
+    public int brickColor;
 
-    public Brick(Context context, int x, int y) {
-        this.sprite = sprite;
-        this.canvas = canvas;
+    public Brick(Context context, int x, int y, int brickColor) {
+        this.brickColor = brickColor;
         this.x = x;
         this.y = y;
         this.width = 60;
         this.height = 30;
-        this.left = 0;
+        this.left = 0 + 60 * brickColor;
         this.top = 0;
-        this.right = 60;
+        this.right = 60 + 60 * brickColor;
         this.bottom = 30;
         this.isDestroyed = false;
         spriteSheet = new SpriteSheet(context);
