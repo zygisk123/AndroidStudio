@@ -54,11 +54,11 @@ public class LevelMaker {
     }
     public void draw(Canvas canvas) {
         bricks(canvas);
-       // for (int i = 0; i < NumOfBricks; i++){
-       //     if(!bricks[i].isDestroyed){
-       //         bricks[i].draw();
-       //     }
-       // }
+     //   for (int i = 0; i < NumOfBricks; i++){
+     //       if(!bricks[i].isDestroyed){
+     //           bricks[i].draw();
+     //       }
+     //   }
 
     }
 

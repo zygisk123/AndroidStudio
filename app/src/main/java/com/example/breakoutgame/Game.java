@@ -1,7 +1,5 @@
 package com.example.breakoutgame;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.view.MotionEvent;
@@ -89,6 +87,11 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         player.draw(canvas);
         ball.draw(canvas);
         level.draw(canvas);
+        bricks = level.bricks;
+        for (int i = 0; i < level.NumOfBricks; i++){
+            bricks[50].isDestroyed = true;
+            bricks[i].draw();
+        }
     }
 
     public void drawFPS(Canvas canvas){
@@ -106,15 +109,11 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         ball.update();
         level.update();
 
+
         if(ball.ballY - ball.radius > player.paddleY + player.height){
             player.heart--;
             if(player.heart > 0){
                 ball.resetBall();
-            }
-            if(player.heart == 0){
-                Intent intent = new Intent(context, GameOver.class);
-                context.startActivity(intent);
-                ((Activity) context).finish();
             }
         }
         // check ball collision
@@ -134,14 +133,10 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
 
         }
 
-        bricks = level.bricks;
-        for (int j = 0; j < level.NumOfBricks; j++){
-            if(!bricks[j].isDestroyed){
-                bricks[j].draw();
-            }
-        }
         for (int i = 0; i < level.NumOfBricks; i++){
-            if (ball.collides(bricks[i])){
+            if (ball.collides(bricks[i]) && !bricks[i].isDestroyed){
+                bricks[i].isDestroyed = true;
+
                 player.score++;
                 // ball RIGHT brick LEFT
                 if (bricks[i].x - ball.radius + 2 >= ball.ballX && ball.ballX > bricks[i].x - ball.radius && ball.ballSpeedX > 0){

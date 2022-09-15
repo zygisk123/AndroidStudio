@@ -26,7 +26,10 @@ public class Brick {
     }
 
     public void draw() {
-        sprite.draw(canvas, x, y, width, height);
+        if(!isDestroyed){
+            sprite.draw(canvas, x, y, width, height);
+        }
+
     }
 
     public void update() {
