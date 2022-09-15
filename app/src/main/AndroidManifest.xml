@@ -23,7 +23,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".GameOver"
-            android:screenOrientation="landscape">
+            android:screenOrientation="portrait">
         </activity>
     </application>
 
