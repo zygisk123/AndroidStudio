@@ -26,7 +26,6 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
     private final Ball ball;
     private final GameLoop gameLoop;
     private final Context context;
-  //  private final Brick brick;
     private Sprite sprite;
     private float temporary_x;
     private float playerSpeed;
@@ -101,12 +100,17 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
     public void draw(Canvas canvas) {
         super.draw(canvas);
         drawFPS(canvas);
-       // drawUPS(canvas);
 
         player.draw(canvas);
         ball.draw(canvas);
         for(int i = 0; i < 52; i++){
             bricks[i].draw(canvas);
+        }
+
+        if (player.heart <= 0){
+            Intent intent = new Intent(context, GameOver.class);
+            context.startActivity(intent);
+        //    ((Activity) context).finish();
         }
     }
 
@@ -123,19 +127,11 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         // Update game state
         player.update();
         ball.update();
-        //brick.update();
-
 
         if(ball.ballY - ball.radius > player.paddleY + player.height){
             player.heart--;
             if(player.heart > 0){
                 ball.resetBall();
-            }
-            else{
-                Intent intent = new Intent(context, GameOver.class);
-                intent.putExtra("points", player.score);
-                context.startActivity(intent);
-                ((Activity) context).finish();
             }
         }
         // check ball collision
@@ -188,3 +184,4 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
 
     }
 }
+
