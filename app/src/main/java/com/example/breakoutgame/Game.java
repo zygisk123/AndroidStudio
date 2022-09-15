@@ -1,5 +1,7 @@
 package com.example.breakoutgame;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.view.MotionEvent;
@@ -108,6 +110,11 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
             player.heart--;
             if(player.heart > 0){
                 ball.resetBall();
+            }
+            if(player.heart == 0){
+                Intent intent = new Intent(context, GameOver.class);
+                context.startActivity(intent);
+                ((Activity) context).finish();
             }
         }
         // check ball collision
