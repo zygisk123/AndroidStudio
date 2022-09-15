@@ -54,11 +54,11 @@ public class LevelMaker {
     }
     public void draw(Canvas canvas) {
         bricks(canvas);
-     //   for (int i = 0; i < NumOfBricks; i++){
-     //       if(!bricks[i].isDestroyed){
-     //           bricks[i].draw();
-     //       }
-     //   }
+      //  for (int i = 0; i < NumOfBricks; i++){
+      //      if(!bricks[i].isDestroyed){
+      //          bricks[i].draw(canvas);
+      //      }
+      //  }
 
     }
 
@@ -87,7 +87,7 @@ public class LevelMaker {
             for (x = 0; x < 13; x++){
                 addX = (brickWidth + 10) * x;
                 addY = (brickHeight + 10) * y;
-                bricks[id] = new Brick(sprite, canvas, (int) positionX + addX, (int) positionY + addY);
+          //      bricks[id] = new Brick(sprite, canvas, (int) positionX + addX, (int) positionY + addY);
                 id++;
             }
         }

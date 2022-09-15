@@ -10,6 +10,8 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 
+import com.example.breakoutgame.graphics.Sprite;
+
 
 // Game manages all object in the game and is responsible for all states and render
 // all objects to the screen
@@ -20,6 +22,8 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
     private final LevelMaker level;
     private final GameLoop gameLoop;
     private final Context context;
+    private final Brick brick;
+    private Sprite sprite;
     private float temporary_x;
     private float playerSpeed;
     private Brick[] bricks;
@@ -39,6 +43,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         player = new Player(getContext());
         ball = new Ball(getContext(),15);
         level = new LevelMaker(getContext());
+        brick = new Brick(getContext(), 100, 100);
         float rangeX = (5f - (-5f)) + 1f;
         ball.ballSpeedX = (float)Math.floor(Math.random() * rangeX) + (-2f);
         float rangeY = (5f - 4f) + 1f;
@@ -87,11 +92,11 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         player.draw(canvas);
         ball.draw(canvas);
         level.draw(canvas);
-        bricks = level.bricks;
-        for (int i = 0; i < level.NumOfBricks; i++){
-            bricks[50].isDestroyed = true;
-            bricks[i].draw();
-        }
+        brick.draw(canvas);
+      //  for (int i = 0; i < level.NumOfBricks; i++){
+      //      bricks[50].isDestroyed = true;
+      //      bricks[i].draw();
+      //  }
     }
 
     public void drawFPS(Canvas canvas){
@@ -108,6 +113,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         player.update();
         ball.update();
         level.update();
+        brick.update();
 
 
         if(ball.ballY - ball.radius > player.paddleY + player.height){
@@ -132,39 +138,41 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
             }
 
         }
-
-        for (int i = 0; i < level.NumOfBricks; i++){
-            if (ball.collides(bricks[i]) && !bricks[i].isDestroyed){
-                bricks[i].isDestroyed = true;
-                player.score++;
-                // ball RIGHT brick LEFT
-                if (ball.ballX - ball.radius < bricks[i].x && ball.ballSpeedX > 0){
-                    ball.ballSpeedX = -ball.ballSpeedX;
-                    ball.ballX = bricks[i].x - ball.radius;
-                    break;
-                }
-                // ball LEFT brick RIGHT
-                else if(ball.ballX + ball.radius > bricks[i].x + bricks[i].width && ball.ballSpeedX < 0){
-                    ball.ballSpeedX = -ball.ballSpeedX;
-                    ball.ballX = bricks[i].x + bricks[i].width + ball.radius;
-                    break;
-
-                }
-                // ball TOP brick BOTTOM
-                else if(ball.ballY - ball.radius < bricks[i].y){
-                    ball.ballSpeedY = -ball.ballSpeedY;
-                    ball.ballY = bricks[i].y - ball.radius;
-                    break;
-
-                }
-                // ball BOTTOM brick TOP
-                else{
-                    ball.ballSpeedY = -ball.ballSpeedY;
-                    ball.ballY = bricks[i].y + bricks[i].height + ball.radius;
-                    break;
-                }
-            }
+        if (ball.collides(brick) && !brick.isDestroyed){
+            brick.isDestroyed = true;
         }
+        //bricks = level.bricks;
+        // for (int i = 0; i < level.NumOfBricks; i++){
+        //    if (ball.collides(bricks[i]) && !bricks[i].isDestroyed){
+        //        bricks[i].isDestroyed = true;
+        //        player.score++;
+        //        // ball RIGHT brick LEFT
+        //        if (ball.ballX - ball.radius < bricks[i].x && ball.ballSpeedX > 0){
+        //            ball.ballSpeedX = -ball.ballSpeedX;
+        //            ball.ballX = bricks[i].x - ball.radius;
+        //            break;
+        //        }
+        //        // ball LEFT brick RIGHT
+        //        else if(ball.ballX + ball.radius > bricks[i].x + bricks[i].width && ball.ballSpeedX < 0){
+        //            ball.ballSpeedX = -ball.ballSpeedX;
+        //            ball.ballX = bricks[i].x + bricks[i].width + ball.radius;
+        //            break;
+        //        }
+                // ball TOP brick BOTTOM
+        //        else if(ball.ballY - ball.radius < bricks[i].y){
+        //            ball.ballSpeedY = -ball.ballSpeedY;
+        //            ball.ballY = bricks[i].y - ball.radius;
+        //            break;
+
+        //        }
+        //        // ball BOTTOM brick TOP
+        //        else{
+        //            ball.ballSpeedY = -ball.ballSpeedY;
+        //            ball.ballY = bricks[i].y + bricks[i].height + ball.radius;
+        //            break;
+        //        }
+        //    }
+        //}
 
     }
 }
