@@ -1,30 +1,33 @@
 package com.example.breakoutgame;
 
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Canvas;
-import android.graphics.Paint;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
 
-import androidx.core.content.ContextCompat;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
-// GameOver is a panel which draws th text game over to the screen
-public class GameOver {
-    private Context context;
+public class GameOver extends AppCompatActivity {
 
-    public GameOver(Context context){
-        this.context = context;
+    TextView tvPoints;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.game_over);
+        int points = getIntent().getExtras().getInt("points");
+       // tvPoints = findViewById(R.id.tvPoints);
+       // tvPoints.setText("" + points);
     }
 
-    public void draw(Canvas canvas) {
-        String text = "Game over";
-        int color = ContextCompat.getColor(context, R.color.gameover);
-        float x = 30;
-        float y = 500;
-        float textSize = 150;
-        Paint paint = new Paint();
-        paint.setColor(color);
-        paint.setTextSize(textSize);
-        canvas.drawText(text, x, y, paint);
+    public void restart(View view) {
+        Intent intent = new Intent(GameOver.this, Game.class);
+        startActivity(intent);
+        finish();
     }
 
+    public void exit(View view) {
+        finish();
+    }
 }

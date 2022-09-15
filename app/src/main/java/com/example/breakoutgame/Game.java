@@ -12,6 +12,7 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 
+import com.example.breakoutgame.graphics.Sprite;
 import com.example.breakoutgame.objects.Ball;
 import com.example.breakoutgame.objects.Brick;
 import com.example.breakoutgame.objects.Player;
@@ -23,13 +24,14 @@ import com.example.breakoutgame.objects.Player;
 public class Game extends SurfaceView implements SurfaceHolder.Callback {
     private final Player player;
     private final Ball ball;
-    private int NumOfBricks = 52;
     private final GameLoop gameLoop;
     private final Context context;
+  //  private final Brick brick;
+    private Sprite sprite;
     private float temporary_x;
     private float playerSpeed;
     private Brick[] bricks;
-    private GameOver gameover;
+    private int NumOfBricks = 52;
 
     public Game(Context context) {
         super(context);
@@ -40,8 +42,6 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
 
         this.context = context;
         gameLoop = new GameLoop(this, surfaceHolder);
-        // Initialize game panels
-        gameover = new GameOver(getContext());
 
         //initialize player
         player = new Player(getContext());
@@ -108,9 +108,6 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         for(int i = 0; i < 52; i++){
             bricks[i].draw(canvas);
         }
-        if(player.heart <= 0){
-            gameover.draw(canvas);
-        }
     }
 
     public void drawFPS(Canvas canvas){
@@ -126,6 +123,8 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         // Update game state
         player.update();
         ball.update();
+        //brick.update();
+
 
         if(ball.ballY - ball.radius > player.paddleY + player.height){
             player.heart--;
@@ -133,7 +132,10 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
                 ball.resetBall();
             }
             else{
-                return;
+                Intent intent = new Intent(context, GameOver.class);
+                intent.putExtra("points", player.score);
+                context.startActivity(intent);
+                ((Activity) context).finish();
             }
         }
         // check ball collision

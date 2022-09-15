@@ -1,7 +1,10 @@
 package com.example.breakoutgame;
 
 import android.graphics.Canvas;
+import android.view.Surface;
 import android.view.SurfaceHolder;
+
+import java.util.Observer;
 
 public class GameLoop extends Thread{
     private boolean isRunning = false;

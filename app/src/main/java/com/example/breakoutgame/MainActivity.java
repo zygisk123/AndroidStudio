@@ -19,13 +19,4 @@ public class MainActivity extends AppCompatActivity {
         // Set content view to game, so that objects in the game class can be rendered to the screen
         setContentView(new Game(this));
     }
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-    }
 }
