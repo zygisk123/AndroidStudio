@@ -2,6 +2,7 @@ package com.example.breakoutgame;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.view.MotionEvent;
@@ -30,8 +31,9 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
     private float temporary_x;
     private float playerSpeed;
     private Brick[] bricks;
-    private int NumOfBricks = 52;
+    public int NumOfBricks = 52;
     private int collisionCount = 0;
+    private int level = 1;
 
     public Game(Context context) {
         super(context);
@@ -101,6 +103,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
     public void draw(Canvas canvas) {
         super.draw(canvas);
         drawFPS(canvas);
+        printLevel(canvas);
 
         player.draw(canvas);
         ball.draw(canvas);
@@ -124,6 +127,22 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         canvas.drawText("FPS: " + averageFPS, 100, 300, paint);
     }
 
+    public static int getScreenWidth() {
+        return Resources.getSystem().getDisplayMetrics().widthPixels;
+    }
+
+    public static int getScreenHeight() {
+        return Resources.getSystem().getDisplayMetrics().heightPixels;
+    }
+
+    public void printLevel(Canvas canvas){
+        Paint paint = new Paint();
+        int color = ContextCompat.getColor(context, R.color.magenta);
+        paint.setColor(color);
+        paint.setTextSize(50);
+        canvas.drawText("Level " + level, getScreenWidth() / 2 - 50, 50, paint);
+    }
+
     public void nextLevel(){
         if(collisionCount == NumOfBricks){
             ball.resetBall();
@@ -131,6 +150,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
                 bricks[i].isDestroyed = false;
             }
             collisionCount = 0;
+            level++;
         }
     }
 
@@ -141,6 +161,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
 
         if(ball.ballY - ball.radius > player.paddleY + player.height){
             player.heart--;
+            player.decreasePaddleWidth();
             if(player.heart > 0){
                 ball.resetBall();
             }
@@ -166,7 +187,8 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
             if (ball.collides(bricks[i]) && !bricks[i].isDestroyed){
                 collisionCount++;
                 bricks[i].isDestroyed = true;
-                player.score = player.score + 1 * bricks[i].brickColor;
+                player.score = player.score + 1 + bricks[i].brickColor;
+                player.temporaryScore = player.temporaryScore + 1 + bricks[i].brickColor;
                 // ball RIGHT brick LEFT
                 if (ball.ballX - ball.radius < bricks[i].x && ball.ballSpeedX > 0){
                     ball.ballSpeedX = -ball.ballSpeedX;
@@ -197,3 +219,4 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
 
     }
 }
+
