@@ -10,5 +10,6 @@
     <color name="magenta">#FF00FF</color>
     <color name="ball">#FF00FF</color>
     <color name="paddle">#45AB1B</color>
+    <color name="gameover">#AC1409</color>
 
 </resources>

@@ -1,4 +1,4 @@
-package com.example.breakoutgame;
+package com.example.breakoutgame.objects;
 
 import android.content.Context;
 import android.graphics.Canvas;

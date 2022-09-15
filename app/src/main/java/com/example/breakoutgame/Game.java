@@ -1,5 +1,7 @@
 package com.example.breakoutgame;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.view.MotionEvent;
@@ -10,7 +12,9 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 
-import com.example.breakoutgame.graphics.Sprite;
+import com.example.breakoutgame.objects.Ball;
+import com.example.breakoutgame.objects.Brick;
+import com.example.breakoutgame.objects.Player;
 
 
 // Game manages all object in the game and is responsible for all states and render
@@ -19,15 +23,13 @@ import com.example.breakoutgame.graphics.Sprite;
 public class Game extends SurfaceView implements SurfaceHolder.Callback {
     private final Player player;
     private final Ball ball;
-    private final LevelMaker level;
+    private int NumOfBricks = 52;
     private final GameLoop gameLoop;
     private final Context context;
-  //  private final Brick brick;
-    private Sprite sprite;
     private float temporary_x;
     private float playerSpeed;
     private Brick[] bricks;
-    private Heart[] hearts;
+    private GameOver gameover;
 
     public Game(Context context) {
         super(context);
@@ -38,11 +40,12 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
 
         this.context = context;
         gameLoop = new GameLoop(this, surfaceHolder);
+        // Initialize game panels
+        gameover = new GameOver(getContext());
 
         //initialize player
         player = new Player(getContext());
         ball = new Ball(getContext(),15);
-        level = new LevelMaker(getContext());
         bricks = new Brick[52];
         int id = 0;
         for (int y = 0; y < 4; y++){
@@ -102,14 +105,12 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
 
         player.draw(canvas);
         ball.draw(canvas);
-        level.draw(canvas);
         for(int i = 0; i < 52; i++){
             bricks[i].draw(canvas);
         }
-      //  for (int i = 0; i < level.NumOfBricks; i++){
-      //      bricks[50].isDestroyed = true;
-      //      bricks[i].draw();
-      //  }
+        if(player.heart <= 0){
+            gameover.draw(canvas);
+        }
     }
 
     public void drawFPS(Canvas canvas){
@@ -125,14 +126,14 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         // Update game state
         player.update();
         ball.update();
-        level.update();
-        //brick.update();
-
 
         if(ball.ballY - ball.radius > player.paddleY + player.height){
             player.heart--;
             if(player.heart > 0){
                 ball.resetBall();
+            }
+            else{
+                return;
             }
         }
         // check ball collision
@@ -152,7 +153,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
 
         }
 
-         for (int i = 0; i < level.NumOfBricks; i++){
+         for (int i = 0; i < NumOfBricks; i++){
             if (ball.collides(bricks[i]) && !bricks[i].isDestroyed){
                 bricks[i].isDestroyed = true;
                 player.score = player.score + 1 * bricks[i].brickColor;

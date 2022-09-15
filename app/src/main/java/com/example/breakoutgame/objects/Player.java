@@ -1,4 +1,4 @@
-package com.example.breakoutgame;
+package com.example.breakoutgame.objects;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -8,6 +8,7 @@ import android.graphics.RectF;
 
 import androidx.core.content.ContextCompat;
 
+import com.example.breakoutgame.R;
 import com.example.breakoutgame.graphics.Sprite;
 import com.example.breakoutgame.graphics.SpriteSheet;
 
@@ -23,7 +24,6 @@ public class Player {
     public float paddleY;
     private Paint paint;
     public int heart = 3;
-    public Heart[] hearts;
     private Sprite sprite;
     public int heartX = 30;
     public int heartY = 30;

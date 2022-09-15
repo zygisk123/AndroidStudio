@@ -1,4 +1,4 @@
-package com.example.breakoutgame;
+package com.example.breakoutgame.objects;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -6,6 +6,8 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 
 import androidx.core.content.ContextCompat;
+
+import com.example.breakoutgame.R;
 
 public class Ball {
     public double ballSpeedX;
