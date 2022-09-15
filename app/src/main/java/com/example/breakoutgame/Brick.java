@@ -8,7 +8,7 @@ public class Brick {
 
     public int height;
     public int width;
-    public boolean isDestroyed;
+    public boolean isDestroyed = false;
     private Sprite sprite;
     private Canvas canvas;
     private int id;
@@ -22,7 +22,7 @@ public class Brick {
         this.y = y;
         this.width = 60;
         this.height = 30;
-        this.isDestroyed = false;
+     //   this.isDestroyed = false;
     }
 
     public void draw() {
