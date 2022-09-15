@@ -31,6 +31,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
     private float playerSpeed;
     private Brick[] bricks;
     private int NumOfBricks = 52;
+    private int collisionCount = 0;
 
     public Game(Context context) {
         super(context);
@@ -123,6 +124,16 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         canvas.drawText("FPS: " + averageFPS, 100, 300, paint);
     }
 
+    public void nextLevel(){
+        if(collisionCount == NumOfBricks){
+            ball.resetBall();
+            for(int i = 0; i < NumOfBricks; i++){
+                bricks[i].isDestroyed = false;
+            }
+            collisionCount = 0;
+        }
+    }
+
     public void update() {
         // Update game state
         player.update();
@@ -153,6 +164,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
 
          for (int i = 0; i < NumOfBricks; i++){
             if (ball.collides(bricks[i]) && !bricks[i].isDestroyed){
+                collisionCount++;
                 bricks[i].isDestroyed = true;
                 player.score = player.score + 1 * bricks[i].brickColor;
                 // ball RIGHT brick LEFT
@@ -181,7 +193,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
                 }
             }
          }
+        nextLevel();
 
     }
 }
-
